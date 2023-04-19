@@ -7,10 +7,10 @@
         public bool PaidStatus { get; set; }
 
         // relationships, this is a join-table between the User and Event tables
+        public Event Event { get; set; } = new Event();
+
         public User OwingUser { get; set; } = new User();
 
-        public User RecievingUser { get; set; } = new User(); 
-
-        public Event Event { get; set; } = new Event();
+        public User RecievingUser { get; set; } = new User();
     }
 }

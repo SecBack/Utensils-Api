@@ -18,5 +18,7 @@ namespace Utensils_Api.Database.Models
         public IList<User> Users { get; set; } = new List<User>();
 
         public Group Group { get; set; } = new Group();
+
+        public Payment Payment { get; set; } = new Payment();
     }
 }
