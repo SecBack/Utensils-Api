@@ -1,7 +1,12 @@
-﻿namespace Utensils_Api.Database.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Utensils_Api.Database.Models
 {
     public class Group
     {
+        [Key]
+        public Guid Id { get; set; }
+
         public string Name { get; set; } = string.Empty;
 
         // relationships
