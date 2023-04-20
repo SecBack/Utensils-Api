@@ -14,8 +14,10 @@ namespace Utensils_Api.Database.Models
         // relationships, this is a join-table between the User and Event tables
         public Event Event { get; set; } = new Event();
 
-        public User OwingUser { get; set; } = new User();
+        public Guid OweingUserId { get; set; }
+        public User OwingUser { get; set; }
 
-        public User RecievingUser { get; set; } = new User();
+        public Guid RecievingUserId { get; set; }
+        public User RecievingUser { get; set; }
     }
 }
