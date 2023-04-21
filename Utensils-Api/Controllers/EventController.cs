@@ -8,7 +8,7 @@ namespace Utensils_Api.Controllers
     public class EventController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<int> GetT()
+        public ActionResult<int> Get()
         {
             return 5;
         }
