@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using Utensils_Api.Database.Models;
 
 namespace Utensils_Api.Database
@@ -25,6 +26,18 @@ namespace Utensils_Api.Database
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Payment>()
+                .HasOne(p => p.OwingUser)
+                .WithMany(u => u.OwedPayments)
+                .HasForeignKey(p => p.OweingUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Payment>()
+                .HasOne(p => p.RecievingUser)
+                .WithMany(u => u.ReceivingPayments)
+                .HasForeignKey(p => p.RecievingUserId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

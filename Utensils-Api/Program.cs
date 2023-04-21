@@ -1,5 +1,6 @@
 using Utensils_Api.Database.Models;
 using Utensils_Api.Database;
+using Utensils_Api.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,5 +40,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapEventEndpoints();
 
 app.Run();
