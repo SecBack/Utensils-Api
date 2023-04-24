@@ -6,7 +6,7 @@ using Utensils_Api.Database.Models;
 
 namespace Utensils_Api.Database
 {
-    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+    public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<Event> Events { get; set; }
 #pragma warning disable CS0114 // Member hides inherited member; missing override keyword
