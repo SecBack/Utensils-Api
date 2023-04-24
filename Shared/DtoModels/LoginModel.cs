@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Shared.DtoModels
 {
-    public class AuthModel
+    public class LoginModel
     {
-        [Required]
-        public string Name { get; set; } = string.Empty;
-
         [Required]
         public string Email { get; set; } = string.Empty;
 
