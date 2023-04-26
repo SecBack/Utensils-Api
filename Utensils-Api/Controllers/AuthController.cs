@@ -45,10 +45,7 @@ namespace Utensils_Api.Controllers
 
             var token = GenerateJwtToken(user);
 
-            return Ok(new
-            {
-                token = token
-            });
+            return Ok(new { token });
         }
 
         private string GenerateJwtToken(User user)
