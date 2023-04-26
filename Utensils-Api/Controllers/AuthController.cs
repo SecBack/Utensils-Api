@@ -20,8 +20,34 @@ namespace Utensils_Api.Controllers
             _signInManager = signInManager;
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(loginDto.UserName, loginDto.Password, false, false);
+            if (!result.Succeeded)
+            {
+                return BadRequest("Invalid login attempt.");
+            }
+
+            var user = await _userManager.FindByNameAsync(loginDto.UserName);
+            var token = GenerateJwtToken(user);
+
+            return Ok(new UserDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.UserName,
+                Token = token
+            });
+        }
+
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             if (!ModelState.IsValid)
             {
@@ -30,11 +56,11 @@ namespace Utensils_Api.Controllers
 
             var user = new User
             {
-                UserName = model.Name,
-                Email = model.Email
+                UserName = registerDto.Name,
+                Email = registerDto.Email
             };
 
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
 
             if (!result.Succeeded)
             {
@@ -45,7 +71,13 @@ namespace Utensils_Api.Controllers
 
             var token = GenerateJwtToken(user);
 
-            return Ok(new { token });
+            return Ok(new UserDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.UserName,
+                Token = token
+            });
         }
 
         private string GenerateJwtToken(User user)
