@@ -24,7 +24,7 @@ namespace Shared.Dto.Models
         public DateTime EndDate { get; set; }
 
         // relationships
-        public IList<AuthModel> Users { get; set; } = new List<AuthModel>();
+        public IList<UserDto> Users { get; set; } = new List<UserDto>();
 
         public IList<PaymentDto> Payment { get; set; } = new List<PaymentDto>();
 

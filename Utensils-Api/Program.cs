@@ -2,6 +2,7 @@ using Utensils_Api.Database.Models;
 using Utensils_Api.Database;
 using Utensils_Api.Controllers;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +16,12 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>();
-// now specify that we modified the original identity user model
 
+// now specify that we modified the original identity user model
 builder.Services.AddIdentity<User, Role>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;

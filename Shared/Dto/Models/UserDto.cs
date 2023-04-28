@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Shared.Dto.Models
@@ -26,6 +25,6 @@ namespace Shared.Dto.Models
 
         public IList<EventDto> Events { get; set; } = new List<EventDto>();
 
-        public IList<Group> Groups { get; set; } = new List<Group>();
+        public IList<GroupDto> Groups { get; set; } = new List<GroupDto>();
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Shared.DtoModels;
+using Shared.Dto.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -37,7 +37,7 @@ namespace Utensils_Api.Controllers
             var user = await _userManager.FindByNameAsync(loginDto.UserName);
             var token = GenerateJwtToken(user);
 
-            return Ok(new UserDto
+            return Ok(new AuthModel
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -71,7 +71,7 @@ namespace Utensils_Api.Controllers
 
             var token = GenerateJwtToken(user);
 
-            return Ok(new UserDto
+            return Ok(new AuthModel
             {
                 Id = user.Id,
                 Email = user.Email,
