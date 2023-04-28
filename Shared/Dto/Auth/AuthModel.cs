@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.DtoModels
+namespace Shared.Dto.Auth
 {
-    public class UserDto
+    public class AuthModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;

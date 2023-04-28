@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Utensils_Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/events")]
     [ApiController]
     public class EventController : ControllerBase
     {
