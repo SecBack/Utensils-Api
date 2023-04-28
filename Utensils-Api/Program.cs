@@ -5,6 +5,16 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+// adds cors to the specified origins
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+    {
+        policy.WithOrigins("https://localhost", "https://0.0.0.0", "*");
+    });
+});
+
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>();
 // now specify that we modified the original identity user model
