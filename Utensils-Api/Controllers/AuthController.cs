@@ -20,7 +20,7 @@ namespace Utensils_Api.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpPost("login")]
+        [HttpPost("api/login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             if (!ModelState.IsValid)
@@ -39,14 +39,11 @@ namespace Utensils_Api.Controllers
 
             return Ok(new AuthModel
             {
-                Id = user.Id,
-                Email = user.Email,
-                Name = user.UserName,
                 Token = token
             });
         }
 
-        [HttpPost("register")]
+        [HttpPost("api/register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             if (!ModelState.IsValid)
@@ -73,9 +70,6 @@ namespace Utensils_Api.Controllers
 
             return Ok(new AuthModel
             {
-                Id = user.Id,
-                Email = user.Email,
-                Name = user.UserName,
                 Token = token
             });
         }
@@ -92,9 +86,12 @@ namespace Utensils_Api.Controllers
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.MobilePhone, user.Phone.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                Issuer = "http://localhost:5000",
+                Audience = "https://0.0.0.0",
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

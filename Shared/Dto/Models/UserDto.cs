@@ -14,7 +14,7 @@ namespace Shared.Dto.Models
 
         public bool DinnerTeam { get; set; }
 
-        public int Phone { get; set; }
+        public string Phone { get; set; } = string.Empty;
 
         public bool HasMobilePay { get; set; }
 

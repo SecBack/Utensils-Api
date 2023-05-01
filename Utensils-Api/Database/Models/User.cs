@@ -11,7 +11,7 @@ namespace Utensils_Api.Database.Models
         public bool DinnerTeam { get; set; }
 
         [PersonalData]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         [PersonalData]
         public bool HasMobilePay { get; set; }
