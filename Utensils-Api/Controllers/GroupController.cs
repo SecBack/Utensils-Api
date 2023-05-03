@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shared.Dto.Models;
 using Shared.Requests;
 using Utensils_Api.Database;
@@ -10,7 +11,7 @@ namespace Utensils_Api.Controllers
 {
     [Route("api/groups")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class GroupController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -32,6 +33,22 @@ namespace Utensils_Api.Controllers
             return _mapper.Map<List<GroupDto>>(groups);
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<GroupDto> GetGroupMembers(Guid id)
+        {
+            // get group including users and events
+            Group? group = _context.Groups
+                .Include(g => g.Users)
+                .FirstOrDefault(g => g.Id == id);
+
+            if (group == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<GroupDto>(group));
+        }
+
         [HttpPost]
         public ActionResult<GroupDto> CreateGroup([FromBody] CreateGroupRequest createGroupRequest)
         {
@@ -43,6 +60,23 @@ namespace Utensils_Api.Controllers
                 Events = new List<Event>()
             };
             _context.Groups.Add(group);
+            _context.SaveChanges();
+
+            return Ok(_mapper.Map<GroupDto>(group));
+        }
+
+        [HttpPost("/join")]
+        public ActionResult<GroupDto> JoinGroup([FromBody] UserJoinGroupRequest request)
+        {
+            Group? group = _context.Groups
+                .Include(g => g.Users)
+                .FirstOrDefault(g => g.Id == request.GroupId);
+            if (group == null) { return NotFound(); }
+
+            User? user = _context.Users.FirstOrDefault(u => u.Id == request.UserId);
+            if (user == null) { return NotFound(); }
+
+            group.Users.Add(user);
             _context.SaveChanges();
 
             return Ok(_mapper.Map<GroupDto>(group));

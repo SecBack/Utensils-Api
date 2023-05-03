@@ -17,6 +17,6 @@ namespace Shared.Dto.Models
         // relationships
         public IList<EventDto> Events { get; set; } = new List<EventDto>();
 
-        public IList<AuthModel> Users { get; set; } = new List<AuthModel>();
+        public IList<UserDto> Users { get; set; } = new List<UserDto>();
     }
 }
