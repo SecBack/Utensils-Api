@@ -65,20 +65,42 @@ namespace Utensils_Api.Controllers
             return Ok(_mapper.Map<GroupDto>(group));
         }
 
-        [HttpPost("/join")]
-        public ActionResult<GroupDto> JoinGroup([FromBody] UserJoinGroupRequest request)
+        // this method updates the group. if the user is not in the group, they are added to the group
+        // and if the user is in the group, they are removed from the group
+        [HttpPut("/update")]
+        public ActionResult<GroupDto> UpdateGroup([FromBody] UpdateGroupRequest updateGroupRequest)
         {
             Group? group = _context.Groups
                 .Include(g => g.Users)
-                .FirstOrDefault(g => g.Id == request.GroupId);
-            if (group == null) { return NotFound(); }
+                .FirstOrDefault(g => g.Id == updateGroupRequest.GroupId);
 
-            User? user = _context.Users.FirstOrDefault(u => u.Id == request.UserId);
-            if (user == null) { return NotFound(); }
+            if (group == null)
+            {
+                return NotFound();
+            }
 
-            group.Users.Add(user);
+            if (group.Users.Any(u => u.Id == updateGroupRequest.UserId))
+            {
+                // remove user from group if they are in the group
+                User? user = _context.Users.FirstOrDefault(u => u.Id == updateGroupRequest.UserId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                group.Users.Remove(user);
+            }
+            else
+            {
+                // add user to group if they are not in the group
+                User? user = _context.Users.FirstOrDefault(u => u.Id == updateGroupRequest.UserId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                group.Users.Add(user);
+            }
+
             _context.SaveChanges();
-
             return Ok(_mapper.Map<GroupDto>(group));
         }
     }
