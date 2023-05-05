@@ -90,8 +90,6 @@ namespace Utensils_Api.Controllers
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-                Issuer = "http://localhost:5000",
-                Audience = "https://0.0.0.0",
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
