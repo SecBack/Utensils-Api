@@ -23,7 +23,7 @@ namespace Utensils_Api.Controllers
         [HttpPost("api/login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            if (!ModelState.IsValid)
+            \if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
