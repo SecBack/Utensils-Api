@@ -6,7 +6,7 @@ namespace Utensils_Api.Controllers
 {
     [Route("api/events")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class EventController : ControllerBase
     {
         [HttpGet]

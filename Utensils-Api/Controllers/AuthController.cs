@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Dto.Auth;
@@ -9,6 +10,7 @@ using Utensils_Api.Database.Models;
 
 namespace Utensils_Api.Controllers
 {
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;

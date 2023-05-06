@@ -12,6 +12,7 @@ namespace Utensils_Api.Controllers
     [Route("api/groups")]
     [ApiController]
     //[Authorize]
+    [AllowAnonymous]
     public class GroupController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -67,7 +68,7 @@ namespace Utensils_Api.Controllers
 
         // this method updates the group. if the user is not in the group, they are added to the group
         // and if the user is in the group, they are removed from the group
-        [HttpPut("/update")]
+        [HttpPut()]
         public ActionResult<GroupDto> UpdateGroup([FromBody] UpdateGroupRequest updateGroupRequest)
         {
             Group? group = _context.Groups
