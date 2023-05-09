@@ -21,5 +21,6 @@ namespace Shared.Requests
 
         // relationships
         public GroupDto Group { get; set; } = new GroupDto();
+        public Guid UserId { get; set; }
     }
 }

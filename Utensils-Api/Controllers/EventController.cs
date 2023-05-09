@@ -29,6 +29,8 @@ namespace Utensils_Api.Controllers
         [HttpPost("create")]
         public ActionResult<EventDto> CreateEvent([FromBody] CreateEventRequest request)
         {
+            User user = _context.Users.First(u => u.Id == request.UserId);
+
             Event eventToSave = new Event()
             {
                 Id = Guid.NewGuid(),
@@ -37,7 +39,18 @@ namespace Utensils_Api.Controllers
                 EventType = request.EventType,
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                Group = _mapper.Map<Group>(request.Group)
+                Group = _mapper.Map<Group>(request.Group),
+                Payments = new List<Payment>()
+                {
+                    new Payment()
+                    {
+                        Id = Guid.NewGuid(),
+                        Balance = 10,
+                        RecievingUser = user,
+                        OwingUser = user,
+                    }
+                },
+                Users = new List<User>() { user }
             };
 
             _context.Events.Add(eventToSave);

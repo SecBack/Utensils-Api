@@ -9,7 +9,7 @@ namespace Utensils_Api.Database
     {
         public MappingProfile()
         {
-            // User to UserDto mapping
+            // User to UserDto mapping map username from identity user to userdto
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.OwedPayments, opt => opt.MapFrom(src => src.OwedPayments))
                 .ForMember(dest => dest.ReceivingPayments, opt => opt.MapFrom(src => src.ReceivingPayments))
@@ -17,8 +17,11 @@ namespace Utensils_Api.Database
                 .ForMember(dest => dest.Events, opt => opt.MapFrom(src => src.Events))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
 
-            // Group to GroupDto mapping, map username from identity user to userdto
+            // Group to GroupDto mapping
             CreateMap<Group, GroupDto>()
+                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users))
+                .ForMember(dest => dest.Events, opt => opt.MapFrom(src => src.Events));
+            CreateMap<GroupDto, Group>()
                 .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users))
                 .ForMember(dest => dest.Events, opt => opt.MapFrom(src => src.Events));
 

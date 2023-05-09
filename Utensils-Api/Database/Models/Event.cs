@@ -25,7 +25,7 @@ namespace Utensils_Api.Database.Models
         // relationships
         public IList<User> Users { get; set; } = new List<User>();
 
-        public IList<Payment> Payment { get; set; } = new List<Payment>();
+        public IList<Payment> Payments { get; set; } = new List<Payment>();
 
         public Group Group { get; set; } = new Group();
     }
